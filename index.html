@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流布局</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding: 0;
+		}
+		#main{
+			position: relative;
+		}
+		.box{	
+			padding: 10px 0 0 10px;
+			float: left;
+		}
+		.pic{
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			padding: 10px;
+			box-shadow: 0 0 5px #ccc;
+		}
+		img{
+			width: 150px;
+		}
+	</style>
+	<script type="text/javascript">
+		window.onload = function(){
+			waterWall();
+			var JsonData = {"data":[{"src":"0.jpg"},{"src":"1.jpg"},{"src":"2.jpg"},{"src":"3.jpg"},{"src":"4.jpg"},]}
+			window.onscroll = function(){
+				if(checkScroll){
+					var prt = document.getElementById("main");
+					for(var i =0;i<JsonData.data.length;i++){
+						var oBox = document.createElement('div');
+						oBox.className = "box";
+						prt.appendChild(oBox);
+						var Pic = document.createElement('div');
+						Pic.className = "pic";
+						oBox.appendChild(Pic);
+						var Img = document.createElement('img');
+						Img.src = "images/"+JsonData.data[i].src;
+						Pic.appendChild(Img);
+						waterWall();
+					}
+				}
+			}
+			
+		}
+		/**
+		 * 计算出每张图片应在的位置
+		 */
+		function waterWall(){
+			var Obox=getByClass("main","box");
+			var dH =document.documentElement.clientWidth;
+			var boxW = Obox[0].offsetWidth;
+			var col = Math.floor(dH/boxW);
+			var boxH = new Array();
+			var Harr = new Array();
+			document.getElementById("main").style.cssText = "width:"+boxW * col+"px;margin:10px auto";
+			for(var i=0;i<Obox.length;i++){
+				if(i<col){
+					boxH[i] = Obox[i].offsetHeight;
+					Harr.push(boxH[i]);
+				}else{
+					var minH = Math.min.apply(null,Harr);
+					for(var j in Harr){
+						if(Harr[j]==minH){
+							var index = j;
+							Harr[index] =Obox[i].offsetHeight + minH;
+							Obox[i].style.position = "absolute";
+							Obox[i].style.top = minH + "px";
+							Obox[i].style.left  = index*boxW + "px";
+							break;
+						}
+					}
+				}
+				
+			}
+		}
+		/**
+		 * [getByClass 查找父元素的id下给定类名的所有元素]
+		 * @param  {[string]} parent [父元素id]
+		 * @param  {[string]} cls    [给定的类名]
+		 * @return {[array]}        [返回元素数组]
+		 */
+		function getByClass(parent,cls) {
+			var par = document.getElementById(parent);
+			var c = par.getElementsByTagName('*');
+			var chd = new Array();
+			for(var i=0;i<c.length;i++){
+				if(c[i].className==cls){
+					chd.push(c[i]);
+				}
+			}
+			return chd;
+		}
+		/**
+		 * [checkScroll 判断是否需要加载图片]
+		 * @return {[boolea]} [如果最后一张图片已出现1/2则返回true，表示可以加载了]
+		 */
+		function checkScroll () {
+			 var Obox = getByClass("main","box");
+			 var sTop = document.body.scrollTop + document.documentElement.scrollTop;
+			 var windowH = document.body.clientHeight + document.documentElement.clientHeight;
+			 var lastBTop = Obox[Obox.length-1].offsetTop + Math.floor(Obox[Obox.length-1].offsetHeight/2);
+			 lastBTop < (sTop + windowH)?true:false;
+		}
+
+	</script>
+</head>
+<body>
+	<div id="main">
+		<div class="box">
+			<div class="pic">
+				<img src="images/0.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/1.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/2.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/3.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/4.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/5.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/6.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/7.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/8.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/9.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/10.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/11.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/12.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/13.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/14.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/15.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/16.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/17.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/18.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/19.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/20.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/21.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/22.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/23.jpg">
+			</div>
+		</div>
+		<div class="box">
+			<div class="pic">
+				<img src="images/24.jpg">
+			</div>
+		</div>
+	</div>
+</body>
+</html>
